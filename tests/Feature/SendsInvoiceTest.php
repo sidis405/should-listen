@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Order;
 use Tests\TestCase;
 use App\Events\NewPurchase;
+use App\Mail\ThankYouEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Notification;
@@ -16,7 +18,7 @@ class SendsInvoiceTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function whenPurchaseIsMadeAnEventIsFired()
+    public function whenPurchaseIsMadeTheEventIsFired()
     {
         $initialDispatcher = Event::getFacadeRoot();
         Event::fake();
@@ -45,5 +47,17 @@ class SendsInvoiceTest extends TestCase
                 return $notification->order->id === $order->id;
             }
         );
+    }
+
+    /** @test */
+    public function whenPurchaseIsMadeTheThankYouEmailIsSent()
+    {
+        Mail::fake();
+
+        $order = factory(Order::class)->create();
+
+        Mail::assertSent(ThankYouEmail::class, function ($mail) use ($order) {
+            return $mail->order->id === $order->id;
+        });
     }
 }

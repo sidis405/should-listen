@@ -5,10 +5,11 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ThankYouEmail extends Mailable
 {
+    public $order;
+
     use Queueable, SerializesModels;
 
     /**
@@ -16,9 +17,9 @@ class ThankYouEmail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -28,6 +29,6 @@ class ThankYouEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->subject('Order #'.$this->order->reference)->view('thank-you-email');
     }
 }
