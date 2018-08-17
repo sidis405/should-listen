@@ -12,7 +12,7 @@ class Order extends Model
         parent::boot();
 
         static::created(function ($order) {
-            event(new NewPurchase($order));
+            event(new NewPurchase($order->load('customer')));
         });
     }
 

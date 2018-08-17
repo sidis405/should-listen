@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\ShouldListen;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -10,17 +11,7 @@ class ThankYouEmail extends Mailable
 {
     public $order;
 
-    use Queueable, SerializesModels;
-
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($order)
-    {
-        $this->order = $order;
-    }
+    use Queueable, SerializesModels, ShouldListen;
 
     /**
      * Build the message.

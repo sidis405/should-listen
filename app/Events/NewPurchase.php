@@ -3,14 +3,16 @@
 namespace App\Events;
 
 use App\Order;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 
-class NewPurchase
+class NewPurchase extends Event
 {
     public $order;
+    public $notifiable = "order.customer";
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

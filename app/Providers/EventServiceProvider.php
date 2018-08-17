@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Events\NewPurchase;
+use App\Mail\ThankYouEmail;
 use App\Listeners\SendInvoice;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use App\Notifications\SendInvoiceNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -20,8 +22,13 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        // NewPurchase::class => [
+            // SendInvoice::class
+        // ]
+
         NewPurchase::class => [
-            SendInvoice::class
+            SendInvoiceNotification::class,
+            ThankYouEmail::class,
         ]
     ];
 

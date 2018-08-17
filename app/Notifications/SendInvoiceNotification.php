@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\ShouldListen;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,17 +11,7 @@ class SendInvoiceNotification extends Notification
 {
     public $order;
 
-    use Queueable;
-
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct($order)
-    {
-        $this->order = $order;
-    }
+    use Queueable, ShouldListen;
 
     /**
      * Get the notification's delivery channels.
