@@ -77,7 +77,7 @@ trait ShouldListen
 
     private function iterateAndFindNotifiables($object)
     {
-        if (is_object($object) && is_subclass_of($object, Model::class)) {
+        if (is_object($object) && is_a($object, Model::class)) {
             if (class_uses($object, Notifiable::class)) {
                 $this->notifiables[] = $object;
             }
@@ -94,7 +94,7 @@ trait ShouldListen
      */
     public function isNotification()
     {
-        return is_subclass_of($this, Notification::class);
+        return is_a($this, Notification::class);
     }
 
     /**
@@ -112,7 +112,7 @@ trait ShouldListen
      */
     private function isMailable()
     {
-        return is_subclass_of($this, Mailable::class);
+        return is_a($this, Mailable::class);
     }
 
     /**
